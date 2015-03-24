@@ -3,7 +3,13 @@ A Twitter bot that tweets today-in-history events
 
 # Dependencies
 
-- Python 2.7, and modules: wikipedia, twython.
+- Python 2.7, and modules: 
+  	wikipedia, 
+  	twython, 
+  	pyOpenSSL, 
+  	ndg-httpsclient, 
+  	pyasn1
+
 
 - Unix/Linux environment and the 'date' command
 
