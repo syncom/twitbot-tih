@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import sys
 import random
 import subprocess
@@ -11,7 +12,7 @@ ApiKey = ''
 ApiSecret = ''
 AccessToken = ''
 AccessTokenSecret = ''
-cred_file = './.auth'
+cred_file = os.path.dirname(os.path.realpath(__file__)) +'/.auth'
 twitter_allowed_char = 140
 
 def get_api_token():
