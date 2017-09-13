@@ -50,8 +50,8 @@ def get_tweet_str():
     Returns str
     '''
     trials = 10
-    tweet_str = 'Nothing to tweet today.'
     today_str = get_today_str()
+    tweet_str = 'Nothing to tweet today. #' + today_str
     events_list = get_events_list(today_str)
     list_size = len(events_list)
     if list_size == 0:
@@ -62,6 +62,7 @@ def get_tweet_str():
         entry_str = events_list[i]
         if len(entry_str) + len(' #' + today_str) <= twitter_allowed_char:
             tweet_str = entry_str + ' #' + today_str
+            return tweet_str
         else:
             trials = trials - 1
     
