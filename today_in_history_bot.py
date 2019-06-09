@@ -12,8 +12,9 @@ ApiKey = ''
 ApiSecret = ''
 AccessToken = ''
 AccessTokenSecret = ''
-cred_file = os.path.dirname(os.path.realpath(__file__)) +'/.auth'
-twitter_allowed_char = 140
+cred_file = os.path.dirname(os.path.realpath(__file__)) + '/.auth'
+twitter_allowed_char = 260
+
 
 def get_api_token():
     ''' Obtain Twitter app's API token from file .auth
@@ -25,24 +26,27 @@ def get_api_token():
     t = c.splitlines()
     return t[0:4]
 
+
 def get_today_str():
     ''' Obtain current date in 'Month_Date' format, e.g., March 3
 
     Returns str
     '''
     d = subprocess.check_output(["date", "+%B_%d"])
-    d_str = d.translate(None, '\n')
-    return d_str
+    d_str = d.strip()
+    return d_str.decode('utf-8')
+
 
 def get_events_list(date_str):
     ''' Obtain the list of events for date_str
 
     Returns list
     '''
-    page = wikipedia.WikipediaPage(title=date_str)
+    page = wikipedia.WikipediaPage(title=str(date_str))
     events = page.section("Events")
     events_list = events.splitlines()
     return events_list
+
 
 def get_tweet_str():
     ''' Obtain the string to tweet. It does sanity checks.
@@ -56,7 +60,7 @@ def get_tweet_str():
     list_size = len(events_list)
     if list_size == 0:
         return tweet_str
-    
+
     while trials > 0:
         i = random.randrange(0, list_size)
         entry_str = events_list[i]
@@ -65,7 +69,7 @@ def get_tweet_str():
             return tweet_str
         else:
             trials = trials - 1
-    
+
     return tweet_str
 
 
@@ -76,13 +80,10 @@ def do_tweet(str):
     [ApiKey, ApiSecret, AccessToken, AccessTokenSecret] = get_api_token()
     api = Twython(ApiKey, ApiSecret, AccessToken, AccessTokenSecret)
     api.update_status(status=str)
-    print "Tweeted: " + str
+    print("Tweeted: ", str)
 
 
 if __name__ == '__main__':
     tweet_str = get_tweet_str()
+    print(tweet_str)
     do_tweet(tweet_str)
-
-
-    
-
