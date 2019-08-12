@@ -14,6 +14,9 @@ A Twitter bot that tweets today-in-history events
 
 - Unix/Linux environment and the 'date' command
 
+- If you run on a Raspberry Pi, you might need to install `rng-tools` for the
+  SSL connection to work
+
 ## Usage
 
 1. Install with the following commands
