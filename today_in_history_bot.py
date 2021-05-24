@@ -12,7 +12,8 @@ ApiKey = ''
 ApiSecret = ''
 AccessToken = ''
 AccessTokenSecret = ''
-cred_file = os.path.dirname(os.path.realpath(__file__)) + '/.auth'
+cred_file = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                         '.auth')
 twitter_allowed_char = 260
 
 
@@ -43,7 +44,12 @@ def get_events_list(date_str):
     Returns list
     '''
     page = wikipedia.WikipediaPage(title=str(date_str))
-    events = page.section("Events")
+    # Use some heuristics to take into account of recent wikipedia page format
+    # changes
+    maybe_events = [page.section(page.sections[i]) for i in
+        range(page.sections.index('Events'), page.sections.index('Births'))]
+    # Drop empty string
+    events = '\n'.join([e.strip() for e in maybe_events if e.strip()])
     events_list = events.splitlines()
     return events_list
 
