@@ -22,10 +22,10 @@ def get_api_token():
 
     Returns list
     '''
-    f = open(cred_file, 'rb')
-    c = f.read()
-    t = c.splitlines()
-    return t[0:4]
+    with open(cred_file, 'rb') as f:
+        c = f.read()
+        t = c.splitlines()
+        return t[0:4]
 
 
 def get_today_str():
