@@ -1,20 +1,18 @@
 #!/usr/bin/env python
+'''
+Tweet today-in-history event obtained from Wikipedia
+'''
 
 import os
-import sys
 import random
 import subprocess
 import wikipedia
 from twython import Twython
 
 
-ApiKey = ''
-ApiSecret = ''
-AccessToken = ''
-AccessTokenSecret = ''
 cred_file = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                          '.auth')
-twitter_allowed_char = 260
+TWITTER_ALLOWED_CHAR = 260
 
 
 def get_api_token():
@@ -22,10 +20,10 @@ def get_api_token():
 
     Returns list
     '''
-    with open(cred_file, 'rb') as f:
-        c = f.read()
-        t = c.splitlines()
-        return t[0:4]
+    with open(cred_file, 'rb') as fil:
+        content = fil.read()
+        templ = content.splitlines()
+        return templ[0:4]
 
 
 def get_today_str():
@@ -33,9 +31,8 @@ def get_today_str():
 
     Returns str
     '''
-    d = subprocess.check_output(["date", "+%B_%d"])
-    d_str = d.strip()
-    return d_str.decode('utf-8')
+    date_str = subprocess.check_output(["date", "+%B_%d"]).strip()
+    return date_str.decode('utf-8')
 
 
 def get_events_list(date_str):
@@ -70,26 +67,26 @@ def get_tweet_str():
     while trials > 0:
         i = random.randrange(0, list_size)
         entry_str = events_list[i]
-        if len(entry_str) + len(' #' + today_str) <= twitter_allowed_char:
+        if len(entry_str) + len(' #' + today_str) <= TWITTER_ALLOWED_CHAR:
             tweet_str = entry_str + ' #' + today_str
-            return tweet_str
-        else:
-            trials = trials - 1
+            break
+
+        trials = trials - 1
 
     return tweet_str
 
 
-def do_tweet(str):
-    ''' Tweet str to Twitter
+def do_tweet(tweet_str):
+    ''' Tweet twt_str to Twitter
 
     '''
-    [ApiKey, ApiSecret, AccessToken, AccessTokenSecret] = get_api_token()
-    api = Twython(ApiKey, ApiSecret, AccessToken, AccessTokenSecret)
-    api.update_status(status=str)
-    print("Tweeted: ", str)
+    [apikey, apisecret, accesstoken, accesstokensecret] = get_api_token()
+    api = Twython(apikey, apisecret, accesstoken, accesstokensecret)
+    api.update_status(status=tweet_str)
+    print("Tweeted: ", tweet_str)
 
 
 if __name__ == '__main__':
-    tweet_str = get_tweet_str()
-    print(tweet_str)
-    do_tweet(tweet_str)
+    twt_str = get_tweet_str()
+    print(twt_str)
+    do_tweet(twt_str)
