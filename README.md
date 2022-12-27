@@ -1,5 +1,7 @@
 # twitbot-tih
 
+[![Shellcheck](https://github.com/syncom/twitbot-tih/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/syncom/twitbot-tih/actions/workflows/shellcheck.yml)
+
 A Twitter bot that tweets today-in-history events
 
 ## Dependencies
