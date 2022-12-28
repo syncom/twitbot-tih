@@ -1,6 +1,7 @@
 # twitbot-tih
 
 [![Shellcheck](https://github.com/syncom/twitbot-tih/actions/workflows/shellcheck.yml/badge.svg)](https://github.com/syncom/twitbot-tih/actions/workflows/shellcheck.yml)
+[![Pylint](https://github.com/syncom/twitbot-tih/actions/workflows/pylint.yml/badge.svg)](https://github.com/syncom/twitbot-tih/actions/workflows/pylint.yml)
 
 A Twitter bot that tweets today-in-history events
 
