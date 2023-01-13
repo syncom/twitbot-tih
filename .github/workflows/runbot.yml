@@ -5,7 +5,7 @@ on:
     - cron: '42 9,21 * * *'
 
 jobs:
-  run-iwpt-bot:
+  run-tih-bot:
     strategy:
       fail-fast: false
       # Linux runner
