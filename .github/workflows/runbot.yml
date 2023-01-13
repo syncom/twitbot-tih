@@ -1,0 +1,29 @@
+name: "Run TIH bot"
+on:
+  schedule:
+    # Daily at 09:42 and 21:42, UTC
+    - cron: '42 9,21 * * *'
+
+jobs:
+  run-iwpt-bot:
+    strategy:
+      fail-fast: false
+      # Linux runner
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: "Run bot"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}/
+          make install
+          ./twitbot-tih-run.sh
+        env:
+          TIH_APP_KEY: '${{ secrets.TIH_APP_KEY }}'
+          TIH_APP_SECRET: '${{ secrets.TIH_APP_SECRET }}'
+          TIH_OAUTH_TOKEN: '${{ secrets.TIH_OAUTH_TOKEN }}'
+          TIH_OAUTH_TOKEN_SECRET: '${{ secrets.TIH_OAUTH_TOKEN_SECRET }}'

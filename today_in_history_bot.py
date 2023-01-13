@@ -17,16 +17,16 @@ TWITTER_ALLOWED_CHAR = 260
 
 def get_api_token():
     ''' Obtain Twitter app's API token values from envirnoment or file .auth.
-    If any of environment variables IWPT_APP_KEY, IWPT_APP_SECRET,
-    IWPT_OAUTH_TOKEN, IWPT_OAUTH_TOKEN_SECRET exist, they override the
+    If any of environment variables TIH_APP_KEY, TIH_APP_SECRET,
+    TIH_OAUTH_TOKEN, TIH_OAUTH_TOKEN_SECRET exist, they override the
     corresponding secret values in file .auth.
 
     Returns list
     '''
-    app_key = os.environ.get('IWPT_APP_KEY')
-    app_secret = os.environ.get('IWPT_APP_SECRET')
-    oauth_token = os.environ.get('IWPT_OAUTH_TOKEN')
-    oauth_token_secret = os.environ.get('IWPT_OAUTH_TOKEN_SECRET')
+    app_key = os.environ.get('TIH_APP_KEY')
+    app_secret = os.environ.get('TIH_APP_SECRET')
+    oauth_token = os.environ.get('TIH_OAUTH_TOKEN')
+    oauth_token_secret = os.environ.get('TIH_OAUTH_TOKEN_SECRET')
     credential = [app_key, app_secret, oauth_token, oauth_token_secret]
 
     if os.path.exists(CRED_FILE):

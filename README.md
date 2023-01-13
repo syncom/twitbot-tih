@@ -30,8 +30,8 @@ A Twitter bot that tweets today-in-history events.
    <http://www.instructables.com/id/Raspberry-Pi-Twitterbot/?ALLSTEPS>.
 
 3. Set up authentication and authorization secrets. The preferred way is to set
-   environment variables `IWPT_APP_KEY`, `IWPT_APP_SECRET`, `IWPT_OAUTH_TOKEN`,
-   and `IWPT_OAUTH_TOKEN_SECRET` with API Key, API Secret, Access Token, and
+   environment variables `TIH_APP_KEY`, `TIH_APP_SECRET`, `TIH_OAUTH_TOKEN`,
+   and `TIH_OAUTH_TOKEN_SECRET` with API Key, API Secret, Access Token, and
    Access Token Secret values obtained in the last step. Alternatively, one can
    override the corresponding strings in the file [.auth](./.auth) with
    appropriate secret strings. When any of the aformetioned environment
