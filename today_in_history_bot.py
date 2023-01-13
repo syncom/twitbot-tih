@@ -61,7 +61,8 @@ def get_events_list(date_str):
     # Use some heuristics to take into account of recent wikipedia page format
     # changes
     maybe_events = [page.section(page.sections[i]) for i in
-        range(page.sections.index('Events'), page.sections.index('Births'))]
+                    range(page.sections.index('Events'),
+                          page.sections.index('Births'))]
     # Drop empty string
     events = '\n'.join([e.strip() for e in maybe_events if e.strip()])
     events_list = events.splitlines()
@@ -104,6 +105,9 @@ def do_tweet(tweet_str):
 
 
 if __name__ == '__main__':
-    twt_str = get_tweet_str()
-    print(twt_str)
-    do_tweet(twt_str)
+    TWT_STR = get_tweet_str()
+    print(TWT_STR)
+    # Set environment variable TIH_DRYRUN to any non-empty value to skip tweet
+    # publication
+    if not os.environ.get('TIH_DRYRUN'):
+        do_tweet(TWT_STR)
