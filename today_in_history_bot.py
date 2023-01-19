@@ -6,8 +6,8 @@ Tweet today-in-history event obtained from Wikipedia
 import os
 import random
 import subprocess
-import wikipedia
 from datetime import datetime
+import wikipedia
 from twython import Twython
 
 
