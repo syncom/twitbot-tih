@@ -7,6 +7,7 @@ import os
 import random
 import subprocess
 import wikipedia
+from datetime import datetime
 from twython import Twython
 
 
@@ -82,6 +83,8 @@ def get_tweet_str():
     if list_size == 0:
         return tweet_str
 
+    # Use system time as random seed
+    random.seed(datetime.now().timestamp())
     while trials > 0:
         i = random.randrange(0, list_size)
         entry_str = events_list[i]
