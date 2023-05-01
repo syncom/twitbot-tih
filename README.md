@@ -27,14 +27,20 @@ A Twitter bot that tweets today-in-history events.
 2. Create a Twitter app and obtain the API Key, API Secret, Access Token, and
    Access Token Secret for the app. This can be done by following the
    instructions at:
-   <http://www.instructables.com/id/Raspberry-Pi-Twitterbot/?ALLSTEPS>.
+   <http://www.instructables.com/id/Raspberry-Pi-Twitterbot/?ALLSTEPS>. After April 2023, if you start
+   seeing API authentication errors, and a message like "This app has violated
+   Twitter rules and policies" on the Twitter app setting page, sign up for the
+   Free tier of "[Twitter API
+   v2](https://developer.twitter.com/en/portal/products)" (at no cost), and
+   clicked button "downgrade to free"; this resolved the auth issue
+   ([reference](https://twittercommunity.com/t/this-app-has-violated-twitter-rules-and-policies/191204/10)).
 
 3. Set up authentication and authorization secrets. The preferred way is to set
    environment variables `TIH_APP_KEY`, `TIH_APP_SECRET`, `TIH_OAUTH_TOKEN`,
    and `TIH_OAUTH_TOKEN_SECRET` with API Key, API Secret, Access Token, and
    Access Token Secret values obtained in the last step. Alternatively, one can
    override the corresponding strings in the file [.auth](./.auth) with
-   appropriate secret strings. When any of the aformetioned environment
+   appropriate secret strings. When any of the aforementioned environment
    variables are set, they take precedence over values in the `.auth` file.
 
 4. Activate the virtual environment.
