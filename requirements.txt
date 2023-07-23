@@ -3,7 +3,7 @@
 setuptools
 # workaround bug https://stackoverflow.com/questions/34869597/wikipedia-api-for-python
 git+https://github.com/lucasdnd/Wikipedia.git
-twython
-pyOpenSSL
-ndg-httpsclient
-pyasn1
+tweepy==4.14.0
+pyOpenSSL==23.2.0
+ndg-httpsclient==0.5.1
+pyasn1==0.5.0

@@ -1,0 +1,4 @@
+.auth
+*.bak
+venv
+tih_venv
