@@ -8,7 +8,7 @@ import random
 import subprocess
 from datetime import datetime
 import wikipedia
-from twython import Twython
+import tweepy
 
 
 CRED_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)),
@@ -16,19 +16,20 @@ CRED_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)),
 TWITTER_ALLOWED_CHAR = 260
 
 
-def get_api_token():
-    ''' Obtain Twitter app's API token values from envirnoment or file .auth.
-    If any of environment variables TIH_APP_KEY, TIH_APP_SECRET,
-    TIH_OAUTH_TOKEN, TIH_OAUTH_TOKEN_SECRET exist, they override the
-    corresponding secret values in file .auth.
+def get_app_credential():
+    ''' Obtain Twitter app's credential from envirnoment or file .auth
+
+    If any of environment variables TIH_API_KEY, TIH_API_SECRET,
+    TIH_ACCESS_TOKEN, TIH_ACCESS_TOKEN_SECRET exist, they override the
+    corresponding secret values in file .auth
 
     Returns list
     '''
-    app_key = os.environ.get('TIH_APP_KEY')
-    app_secret = os.environ.get('TIH_APP_SECRET')
-    oauth_token = os.environ.get('TIH_OAUTH_TOKEN')
-    oauth_token_secret = os.environ.get('TIH_OAUTH_TOKEN_SECRET')
-    credential = [app_key, app_secret, oauth_token, oauth_token_secret]
+    api_key = os.environ.get('TIH_API_KEY')
+    api_secret = os.environ.get('TIH_API_SECRET')
+    access_token = os.environ.get('TIH_ACCESS_TOKEN')
+    access_token_secret = os.environ.get('TIH_ACCESS_TOKEN_SECRET')
+    credential = [api_key, api_secret, access_token, access_token_secret]
 
     if os.path.exists(CRED_FILE):
         with open(CRED_FILE, 'r', encoding='utf-8') as fil:
@@ -101,10 +102,14 @@ def do_tweet(tweet_str):
     ''' Tweet twt_str to Twitter
 
     '''
-    [apikey, apisecret, accesstoken, accesstokensecret] = get_api_token()
-    api = Twython(apikey, apisecret, accesstoken, accesstokensecret)
-    api.update_status(status=tweet_str)
+    [apikey, apisecret, accesstoken, accesstokensecret] = get_app_credential()
+    client = tweepy.Client(consumer_key=apikey,
+                           consumer_secret=apisecret,
+                           access_token=accesstoken,
+                           access_token_secret=accesstokensecret)
+    response = client.create_tweet(text=tweet_str)
     print("Tweeted: ", tweet_str)
+    print(response)
 
 
 if __name__ == '__main__':

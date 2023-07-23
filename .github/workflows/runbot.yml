@@ -23,7 +23,7 @@ jobs:
           make install
           ./twitbot-tih-run.sh
         env:
-          TIH_APP_KEY: '${{ secrets.TIH_APP_KEY }}'
-          TIH_APP_SECRET: '${{ secrets.TIH_APP_SECRET }}'
-          TIH_OAUTH_TOKEN: '${{ secrets.TIH_OAUTH_TOKEN }}'
-          TIH_OAUTH_TOKEN_SECRET: '${{ secrets.TIH_OAUTH_TOKEN_SECRET }}'
+          TIH_API_KEY: '${{ secrets.TIH_API_KEY }}'
+          TIH_API_SECRET: '${{ secrets.TIH_API_SECRET }}'
+          TIH_ACCESS_TOKEN: '${{ secrets.TIH_ACCESS_TOKEN }}'
+          TIH_ACCESS_TOKEN_SECRET: '${{ secrets.TIH_ACCESS_TOKEN_SECRET }}'
