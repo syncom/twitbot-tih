@@ -1,0 +1,86 @@
+
+# Sanity checks
+name: 'Sanity'
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+    branches:
+      - 'master'
+
+jobs:
+  shellcheck:
+    name: 'Shellcheck'
+    strategy:
+      fail-fast: false
+      # Linux runner
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v3
+      - name: 'Install shellcheck on Ubuntu'
+        run: |
+          sudo apt update
+          sudo apt install shellcheck -y
+
+      - name: 'Run shellcheck'
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}/
+          shellcheck --version
+          for f in $(find . -path ./.git -prune -o -type f -print); do
+            if file "$f" | grep "shell script" &>/dev/null; then
+              shellcheck "$f"
+            fi
+          done
+
+  pylint:
+    name: 'Python Linting'
+    strategy:
+      fail-fast: false
+      # Linux runner
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v3
+      - name: "Install pylint on Ubuntu"
+        run: |
+          sudo apt update
+          sudo apt install pylint -y
+
+      - name: 'Run pylint'
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}/
+          pylint --version
+          make install
+          source ./venv
+          for f in $(find . \( -path ./.git -o -path ./tih_venv \) -prune -o -type f -print); do
+            if file "$f" | grep "Python script" &>/dev/null; then
+              pylint "$f"
+            fi
+          done
+
+  dryrun-tih-bot:
+    name: 'Dry run TIH bot'
+    strategy:
+      fail-fast: false
+      # Linux runner
+      matrix:
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: 'Checkout code'
+        uses: actions/checkout@v3
+
+      - name: 'Dryrun bot'
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}/
+          make install
+          TIH_DRYRUN=1 ./twitbot-tih-run.sh
