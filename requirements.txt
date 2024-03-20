@@ -1,8 +1,6 @@
 --index-url https://pypi.python.org/simple/
 
 setuptools
-# workaround bug https://stackoverflow.com/questions/34869597/wikipedia-api-for-python
-#git+https://github.com/lucasdnd/Wikipedia.git
 wikipedia==1.4.0
 tweepy==4.14.0
 pyOpenSSL==23.2.0
