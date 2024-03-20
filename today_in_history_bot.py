@@ -59,16 +59,18 @@ def get_events_list(date_str):
 
     Returns list
     '''
-    page = wikipedia.WikipediaPage(title=str(date_str))
+    content = wikipedia.WikipediaPage(title=str(date_str)).content
+    # Split the content into lines, dropping empty lines
+    lines = [line for line in content.splitlines() if line.strip()]
     # Use some heuristics to take into account of recent wikipedia page format
     # changes
-    maybe_events = [page.section(page.sections[i]) for i in
-                    range(page.sections.index('Events'),
-                          page.sections.index('Births'))]
-    # Drop empty string
-    events = '\n'.join([e.strip() for e in maybe_events if e.strip()])
-    events_list = events.splitlines()
-    return events_list
+    maybe_events = [lines[i] for i in
+        range(lines.index('== Events =='), lines.index('== Births =='))]
+    # Remove section headers
+    events = [line for line in maybe_events if not line.startswith('=')]
+    for event in events:
+        print(event)
+    return events
 
 
 def get_tweet_str():
