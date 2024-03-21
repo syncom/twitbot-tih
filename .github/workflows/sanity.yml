@@ -20,7 +20,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: 'Install shellcheck on Ubuntu'
         run: |
           sudo apt update
@@ -47,7 +47,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.1.1
       - name: "Install pylint on Ubuntu"
         run: |
           sudo apt update
