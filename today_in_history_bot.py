@@ -5,10 +5,12 @@ Tweet today-in-history event obtained from Wikipedia
 
 import os
 import random
+import re
 import subprocess
 from datetime import datetime
 import wikipedia
 import tweepy
+from bs4 import BeautifulSoup
 
 
 CRED_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)),
@@ -59,16 +61,18 @@ def get_events_list(date_str):
 
     Returns list
     '''
-    content = wikipedia.WikipediaPage(title=str(date_str)).content
+    content = wikipedia.WikipediaPage(title=str(date_str)).html()
+    content = BeautifulSoup(content, 'html.parser').get_text()
     # Split the content into lines, dropping empty lines
     lines = [line for line in content.splitlines() if line.strip()]
     # Use some heuristics to take into account of recent wikipedia page format
-    # changes
+    # changes in July 2024
     maybe_events = [lines[i] for i in
-        range(lines.index('== Events =='), lines.index('== Births =='))]
+        range(lines.index('Events[edit]'), lines.index('Births[edit]'))]
     # Remove section headers
-    events = [line for line in maybe_events if not line.startswith('=')]
+    events = [line for line in maybe_events if not line.endswith('[edit]')]
     for event in events:
+        event = re.sub(r'\[\d+\]', '', event)
         print(event)
     return events
 
