@@ -71,10 +71,9 @@ def get_events_list(date_str):
         range(lines.index('Events[edit]'), lines.index('Births[edit]'))]
     # Remove section headers
     events = [line for line in maybe_events if not line.endswith('[edit]')]
-    for event in events:
-        event = re.sub(r'\[\d+\]', '', event)
-        print(event)
-    return events
+    # Remove braced references from end of event string
+    events_trimmed = [re.sub(r'\[\d+\]', '', event) for event in events]
+    return events_trimmed
 
 
 def get_tweet_str():
@@ -86,6 +85,8 @@ def get_tweet_str():
     today_str = get_today_str()
     tweet_str = 'Nothing to tweet today. #' + today_str
     events_list = get_events_list(today_str)
+    # For debugging
+    print(events_list)
     list_size = len(events_list)
     if list_size == 0:
         return tweet_str
