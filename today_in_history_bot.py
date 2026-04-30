@@ -7,7 +7,7 @@ import os
 import random
 import re
 import subprocess
-from datetime import datetime
+from datetime import datetime, timedelta
 import wikipedia
 import tweepy
 from bs4 import BeautifulSoup
@@ -16,6 +16,23 @@ from bs4 import BeautifulSoup
 CRED_FILE = os.path.join(os.path.dirname(os.path.realpath(__file__)),
                          '.auth')
 TWITTER_ALLOWED_CHAR = 260
+
+
+def _configure_wikipedia_client():
+    '''Use a unique User-Agent and rate limiting for the MediaWiki API.
+
+    The wikipedia package default UA is shared by all callers; Wikimedia often
+    replies with HTTP 429 and a non-JSON body, which surfaces as JSONDecodeError.
+    '''
+    contact = os.environ.get(
+        'TIH_WIKIPEDIA_CONTACT',
+        'https://github.com/syncom/twitbot-tih/issues',
+    )
+    wikipedia.set_user_agent(f'twitbot-tih/1.0 (+{contact})')
+    wikipedia.set_rate_limiting(True, min_wait=timedelta(milliseconds=200))
+
+
+_configure_wikipedia_client()
 
 
 def get_app_credential():
@@ -38,9 +55,10 @@ def get_app_credential():
             content = fil.read()
             templ = content.splitlines()
             if len(templ) < 4:
-                raise Exception(CRED_FILE
-                                + " is malformed. "
-                                + "It needs to contain at least 4 secrets")
+                raise ValueError(
+                    f'{CRED_FILE} is malformed. '
+                    'It needs to contain at least 4 secrets'
+                )
             return [fil if env is None else env
                     for env, fil in zip(credential, templ)]
 
