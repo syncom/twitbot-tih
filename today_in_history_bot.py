@@ -28,7 +28,7 @@ def _configure_wikipedia_client():
         'TIH_WIKIPEDIA_CONTACT',
         'https://github.com/syncom/twitbot-tih/issues',
     )
-    wikipedia.set_user_agent('twitbot-tih/1.0 (+{0})'.format(contact))
+    wikipedia.set_user_agent(f'twitbot-tih/1.0 (+{contact})')
     wikipedia.set_rate_limiting(True, min_wait=timedelta(milliseconds=200))
 
 
@@ -55,9 +55,10 @@ def get_app_credential():
             content = fil.read()
             templ = content.splitlines()
             if len(templ) < 4:
-                raise Exception(CRED_FILE
-                                + " is malformed. "
-                                + "It needs to contain at least 4 secrets")
+                raise ValueError(
+                    f'{CRED_FILE} is malformed. '
+                    'It needs to contain at least 4 secrets'
+                )
             return [fil if env is None else env
                     for env, fil in zip(credential, templ)]
 
